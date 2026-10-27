@@ -1,0 +1,8 @@
+/* Páginas legales: reutilizan head, faq, disc y cta de la landing. Ajustes mínimos de lectura. */
+.legal__row{margin-top:6px}
+.faq__list .disc__body p,.faq__list .disc__body li{max-width:68ch}
+.faq__list .disc__body p+p,.faq__list .disc__body p+ul,.faq__list .disc__body ul+p{margin-top:12px}
+.faq__list .disc__body ul{list-style:disc;padding-left:1.2em}
+.faq__list .disc__body li::marker{color:var(--green-text)}
+.faq__list .disc__body a{color:var(--link);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
+.faq__list .disc__body strong{color:var(--ink);font-weight:600}

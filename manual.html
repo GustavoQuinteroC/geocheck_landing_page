@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GeoCheck | Manual de Usuario</title>
+    <meta name="description" content="Manual de usuario completo del sistema GeoCheck para el control de asistencia por geolocalización.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #061c6b;
+            --accent-color: #07ba86;
+            --danger-color: #980609;
+            --brand-gradient: linear-gradient(135deg, #061c6b 0%, #07ba86 100%);
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        body {
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        /* Navbar fija */
+        .manual-navbar {
+            background: var(--primary-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1040;
+            padding: 12px 0;
+            box-shadow: 0 2px 15px rgba(6, 28, 107, 0.3);
+        }
+
+        .manual-navbar .navbar-brand { color: #fff !important; font-weight: 700; }
+        .manual-navbar .nav-link { color: rgba(255,255,255,0.8) !important; font-size: 0.9rem; }
+        .manual-navbar .nav-link:hover { color: var(--accent-color) !important; }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 280px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 20px 0;
+            z-index: 1030;
+            scrollbar-width: thin;
+        }
+
+        .toc-sidebar .toc-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6c757d;
+            padding: 0 20px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .toc-sidebar a {
+            display: block;
+            padding: 6px 20px;
+            color: #495057;
+            text-decoration: none;
+            font-size: 0.88rem;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .toc-sidebar a:hover,
+        .toc-sidebar a.active {
+            background: rgba(7, 186, 134, 0.08);
+            color: var(--primary-color);
+            border-left-color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .toc-sidebar a.sub { padding-left: 36px; font-size: 0.82rem; color: #6c757d; }
+        .toc-sidebar a.sub:hover { color: var(--primary-color); }
+
+        .toc-sidebar hr { margin: 10px 20px; opacity: 0.15; }
+
+        /* Contenido principal */
+        .manual-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 40px 50px 80px;
+            max-width: 960px;
+        }
+
+        /* Secciones */
+        .section-header {
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        .section-header:first-of-type { margin-top: 0; }
+
+        .section-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .section-header h2 i { margin-right: 10px; }
+
+        h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Tarjetas de tip/nota/importante */
+        .tip-box {
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 0.92rem;
+        }
+
+        .tip-box.tip {
+            background: rgba(7, 186, 134, 0.08);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .tip-box.warning {
+            background: rgba(243, 156, 18, 0.08);
+            border-left: 4px solid #f39c12;
+        }
+
+        .tip-box.danger {
+            background: rgba(152, 6, 9, 0.06);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .tip-box.info {
+            background: rgba(6, 28, 107, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .tip-box strong { display: block; margin-bottom: 4px; }
+
+        /* Tablas de referencia */
+        .ref-table {
+            font-size: 0.9rem;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .ref-table thead th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+        }
+
+        .ref-table tbody td {
+            padding: 8px 14px;
+            border-top: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .ref-table tbody tr:hover { background: rgba(7, 186, 134, 0.04); }
+
+        /* Badges de campo */
+        .badge-required {
+            background: var(--danger-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-optional {
+            background: #6c757d;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .badge-auto {
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Steps / pasos */
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            padding: 12px 0 12px 50px;
+            position: relative;
+            border-left: 2px solid #e9ecef;
+            margin-left: 16px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -17px;
+            top: 10px;
+            width: 32px;
+            height: 32px;
+            background: var(--brand-gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .step-list li:last-child { border-left-color: transparent; }
+
+        /* Inline code */
+        code {
+            background: rgba(6, 28, 107, 0.06);
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Keyboard shortcuts */
+        kbd {
+            background: #333;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.82em;
+        }
+
+        /* Diagrama relaciones */
+        .relation-box {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .relation-box:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(7, 186, 134, 0.1);
+        }
+
+        .relation-box i { font-size: 2rem; color: var(--primary-color); }
+        .relation-box h6 { margin-top: 8px; font-weight: 700; color: var(--primary-color); }
+
+        .relation-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        .manual-footer {
+            margin-left: 280px;
+            background: var(--primary-color);
+            color: rgba(255,255,255,0.7);
+            padding: 20px 50px;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .toc-sidebar { display: none; }
+            .manual-content { margin-left: 0; padding: 30px 20px 60px; }
+            .manual-footer { margin-left: 0; }
+        }
+
+        /* Scrollbar */
+        .toc-sidebar::-webkit-scrollbar { width: 4px; }
+        .toc-sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+        /* Hero */
+        .manual-hero {
+            background: var(--brand-gradient);
+            color: white;
+            padding: 50px 0;
+            margin: -40px -50px 40px;
+            padding: 50px;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .manual-hero h1 { font-weight: 800; font-size: 2.2rem; }
+        .manual-hero p { opacity: 0.85; font-size: 1.1rem; }
+
+        /* Flowchart items */
+        .flow-step {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .flow-step i { font-size: 1.5rem; color: var(--accent-color); }
+        .flow-step p { margin-bottom: 0; font-size: 0.85rem; font-weight: 600; }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="manual-navbar">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/img/logo_geocheck.png" alt="GeoCheck Logo" style="width:32px; height:32px; object-fit:contain;" class="me-2">
+                GeoCheck <span class="fw-normal ms-2 opacity-75">| Manual de Usuario</span>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="/" class="nav-link"><i class="bi bi-box-arrow-in-right me-1"></i>Panel</a>
+                <a href="/checador/" class="nav-link"><i class="bi bi-fingerprint me-1"></i>Checador</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar TOC -->
+<aside class="toc-sidebar">
+    <div class="toc-title">Contenido</div>
+    <a href="#introduccion"><i class="bi bi-info-circle me-2"></i>Introducción</a>
+    <a href="#arquitectura"><i class="bi bi-diagram-3 me-2"></i>Arquitectura</a>
+    <hr>
+    <div class="toc-title">Acceso</div>
+    <a href="#login"><i class="bi bi-key me-2"></i>Iniciar sesión</a>
+    <a href="#personalizacion"><i class="bi bi-palette me-2"></i>Personalización</a>
+    <hr>
+    <div class="toc-title">Checador (empleado)</div>
+    <a href="#checador"><i class="bi bi-fingerprint me-2"></i>El checador</a>
+    <a href="#checador-checar" class="sub">Registrar una checada</a>
+    <a href="#checador-reglas" class="sub">Reglas y validaciones</a>
+    <hr>
+    <div class="toc-title">Módulos del panel</div>
+    <a href="#dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+    <a href="#usuarios"><i class="bi bi-people me-2"></i>Usuarios</a>
+    <a href="#horarios"><i class="bi bi-clock me-2"></i>Horarios</a>
+    <a href="#ubicaciones"><i class="bi bi-map me-2"></i>Ubicaciones</a>
+    <a href="#checadas"><i class="bi bi-calendar-check me-2"></i>Checadas</a>
+    <a href="#incidencias"><i class="bi bi-shield-exclamation me-2"></i>Incidencias</a>
+    <a href="#reportes"><i class="bi bi-file-earmark-bar-graph me-2"></i>Reportes</a>
+    <a href="#configuracion"><i class="bi bi-gear me-2"></i>Configuración</a>
+    <a href="#auditoria"><i class="bi bi-clipboard-data me-2"></i>Auditoría</a>
+    <hr>
+    <div class="toc-title">Referencia</div>
+    <a href="#relaciones"><i class="bi bi-share me-2"></i>Relaciones</a>
+    <a href="#atajos"><i class="bi bi-lightning me-2"></i>Atajos y tips</a>
+    <a href="#tecnologia"><i class="bi bi-cpu me-2"></i>Tecnología</a>
+    <a href="#faq"><i class="bi bi-question-circle me-2"></i>FAQ</a>
+</aside>
+
+<!-- Contenido Principal -->
+<div class="manual-content">
+
+    <!-- Hero -->
+    <div class="manual-hero">
+        <h1><i class="bi bi-geo-alt-fill me-2"></i>Manual de Usuario</h1>
+        <p>Guía completa para el uso del sistema GeoCheck de control de asistencia por geolocalización.</p>
+        <div class="d-flex gap-2 mt-3">
+            <span class="badge bg-white text-primary px-3 py-2">Versión 1.0</span>
+            <span class="badge bg-white bg-opacity-25 px-3 py-2">Actualizado: Junio 2026</span>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- INTRODUCCIÓN -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="introduccion">
+        <h2><i class="bi bi-info-circle"></i>Introducción</h2>
+    </div>
+
+    <p><strong>GeoCheck</strong> es un sistema web profesional de <strong>control de asistencia por geolocalización</strong>. Los empleados marcan su entrada, salida y descansos desde su celular validando su posición GPS y tomando una foto de evidencia, mientras el área administrativa supervisa todo desde un panel central. Permite a las organizaciones:</p>
+
+    <ul>
+        <li>Registrar <strong>checadas con geocerca</strong>: el empleado solo puede checar si está físicamente dentro del perímetro de su ubicación de trabajo</li>
+        <li>Capturar <strong>evidencia fotográfica</strong> obligatoria en cada checada</li>
+        <li>Definir <strong>horarios por segmentos</strong> (bloques laborales y descansos) con tolerancias por bloque</li>
+        <li>Detectar <strong>retardos</strong> automáticamente comparando contra el horario asignado</li>
+        <li>Generar <strong>incidencias automáticas</strong> cuando un empleado omite una checada obligatoria</li>
+        <li>Resolver incidencias desde el panel: completar, <strong>autorizar o rechazar</strong> con motivo</li>
+        <li>Consultar un <strong>dashboard</strong> con indicadores en tiempo real y <strong>reportes</strong> de asistencia exportables</li>
+        <li>Rastrear toda la actividad mediante un módulo de <strong>auditoría</strong></li>
+    </ul>
+
+    <h3>Los dos frentes del sistema</h3>
+    <div class="row g-3 my-3">
+        <div class="col-md-6">
+            <div class="relation-box">
+                <i class="bi bi-phone"></i>
+                <h6>Checador (empleado)</h6>
+                <small class="text-muted">App web móvil donde el empleado marca con su NIP, GPS y cámara. No requiere contraseña ni instalación.</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="relation-box">
+                <i class="bi bi-display"></i>
+                <h6>Panel administrativo</h6>
+                <small class="text-muted">Donde administradores y supervisores gestionan usuarios, horarios, ubicaciones, incidencias y reportes.</small>
+            </div>
+        </div>
+    </div>
+
+    <h3>Roles del sistema</h3>
+    <table class="table ref-table">
+        <thead>
+            <tr><th>Rol</th><th>Accede al panel</th><th>Usa el checador</th><th>Qué puede hacer</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="badge bg-danger">Administrador</span></td><td>Sí</td><td>Sí</td><td>Todo: usuarios (incluidos otros administradores), configuración, horarios, ubicaciones, incidencias y reportes</td></tr>
+            <tr><td><span class="badge bg-warning text-dark">Supervisor</span></td><td>Sí</td><td>Sí</td><td>Gestión operativa diaria. No puede crear ni editar administradores ni entrar a Configuración</td></tr>
+            <tr><td><span class="badge bg-info">Empleado</span></td><td>No</td><td>Sí</td><td>Únicamente registra sus checadas desde el checador con su NIP</td></tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-shield-lock me-1"></i> Datos aislados por empresa</strong>
+        GeoCheck es multiempresa: cada empresa ve únicamente sus propios usuarios, ubicaciones, checadas e incidencias. Toda la información está aislada y protegida.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- ARQUITECTURA -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="arquitectura">
+        <h2><i class="bi bi-diagram-3"></i>Arquitectura del Sistema</h2>
+    </div>
+
+    <p>GeoCheck sigue una arquitectura organizada con comunicación instantánea con el servidor:</p>
+
+    <div class="row g-3 my-4">
+        <div class="col-md-3">
+            <div class="flow-step">
+                <i class="bi bi-phone"></i>
+                <p>Checador / Navegador</p>
+                <small class="text-muted">GPS + cámara + interfaz</small>
+            </div>
+        </div>
+        <div class="col-md-1 flow-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-3">
+            <div class="flow-step">
+                <i class="bi bi-gear"></i>
+                <p>Motor de validación</p>
+                <small class="text-muted">Geocerca, horario, retardos</small>
+            </div>
+        </div>
+        <div class="col-md-1 flow-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-3">
+            <div class="flow-step">
+                <i class="bi bi-database"></i>
+                <p>Base de datos</p>
+                <small class="text-muted">Almacenamiento seguro</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-shield-check me-1"></i> La validación siempre ocurre en el servidor</strong>
+        Aunque el celular del empleado reporte su posición, la distancia a la geocerca, el tipo de checada, los retardos y la hora oficial se calculan <strong>en el servidor</strong>. La hora del dispositivo se registra solo como referencia: la que cuenta es la del sistema. Esto hace que el registro sea confiable y a prueba de manipulaciones.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- LOGIN -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="login">
+        <h2><i class="bi bi-key"></i>Iniciar Sesión (panel)</h2>
+    </div>
+
+    <p>Al acceder a GeoCheck se presenta la pantalla de acceso con un elegante fondo animado de estrellas. El panel es exclusivo para <strong>administradores y supervisores</strong>.</p>
+
+    <h3>Campos del formulario</h3>
+    <table class="table ref-table">
+        <thead>
+            <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><i class="bi bi-envelope me-1"></i> Correo</td>
+                <td>Correo electrónico</td>
+                <td>Dirección de correo registrada en el sistema (no distingue mayúsculas)</td>
+            </tr>
+            <tr>
+                <td><i class="bi bi-lock me-1"></i> Contraseña</td>
+                <td>Contraseña</td>
+                <td>Contraseña de acceso. Puede mostrarse/ocultarse con el icono del ojo</td>
+            </tr>
+            <tr>
+                <td><i class="bi bi-check-square me-1"></i> Recuérdame</td>
+                <td>Casilla de verificación</td>
+                <td>Mantiene la sesión activa de forma segura hasta por 30 días</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Funciones de acceso</h3>
+    <ul>
+        <li><strong>Mostrar/ocultar contraseña:</strong> Haz clic en el icono <i class="bi bi-eye"></i> junto al campo de contraseña</li>
+        <li><strong>Recordar sesión:</strong> La opción "Recuérdame" permite acceso automático en futuras visitas; el acceso se renueva de forma segura en cada uso</li>
+        <li><strong>Olvidé mi contraseña:</strong> Muestra un aviso para contactar a tu administrador, quien puede asignarte una nueva desde el módulo de Usuarios</li>
+    </ul>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-exclamation-triangle me-1"></i> Bloqueo por intentos</strong>
+        Tras <strong>3 intentos fallidos</strong> de contraseña, la cuenta se bloquea durante <strong>15 minutos</strong> por seguridad. El mensaje indica cuántos minutos faltan para poder reintentar.
+    </div>
+
+    <div class="tip-box danger">
+        <strong><i class="bi bi-person-x me-1"></i> Los empleados no entran al panel</strong>
+        Un usuario con rol <strong>Empleado</strong> no puede iniciar sesión en el panel aunque tenga correo y contraseña registrados. Su acceso es el <strong>checador</strong> con su NIP.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- PERSONALIZACIÓN -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="personalizacion">
+        <h2><i class="bi bi-palette"></i>Personalización del Sistema</h2>
+    </div>
+
+    <p>Una vez dentro del panel, podrás personalizar la apariencia desde la barra superior (navbar).</p>
+
+    <h3><i class="bi bi-moon-fill me-1"></i> Tema Claro / Oscuro</h3>
+    <p>Haz clic en el icono de <strong>sol/luna</strong> en la esquina superior derecha para alternar entre tema claro y oscuro. El sistema recuerda tu preferencia.</p>
+
+    <h3><i class="bi bi-brush me-1"></i> Color de Énfasis</h3>
+    <p>Haz clic en el icono de <strong>pincel</strong> para cambiar el color de acento de la interfaz. Opciones disponibles:</p>
+
+    <div class="d-flex gap-3 my-3">
+        <div class="d-flex align-items-center gap-2">
+            <span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:#061C6B;"></span>
+            <small>Azul</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:#07BA86;"></span>
+            <small>Verde</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:#343a40;"></span>
+            <small>Oscuro</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:#f8f9fa;border:1px solid #ccc;"></span>
+            <small>Claro</small>
+        </div>
+    </div>
+
+    <h3><i class="bi bi-list me-1"></i> Menú Lateral (Sidebar)</h3>
+    <p>El menú lateral izquierdo organiza los módulos del panel en cuatro secciones:</p>
+
+    <table class="table ref-table">
+        <thead>
+            <tr><th>Sección</th><th>Módulo</th><th>Icono</th></tr>
+        </thead>
+        <tbody>
+            <tr><td rowspan="2"><strong>Reportes y análisis</strong></td><td>Dashboard</td><td><i class="bi bi-speedometer2"></i></td></tr>
+            <tr><td>Reportes</td><td><i class="bi bi-file-earmark-bar-graph"></i></td></tr>
+            <tr><td rowspan="4"><strong>Personal</strong></td><td>Usuarios</td><td><i class="bi bi-people"></i></td></tr>
+            <tr><td>Horarios</td><td><i class="bi bi-clock"></i></td></tr>
+            <tr><td>Ubicaciones</td><td><i class="bi bi-map"></i></td></tr>
+            <tr><td>Checadas</td><td><i class="bi bi-calendar-check"></i></td></tr>
+            <tr><td><strong>Seguridad</strong></td><td>Incidencias</td><td><i class="bi bi-shield-exclamation"></i></td></tr>
+            <tr><td rowspan="2"><strong>Sistema</strong></td><td>Configuración</td><td><i class="bi bi-gear"></i></td></tr>
+            <tr><td>Auditoría</td><td><i class="bi bi-clipboard-data"></i></td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================================================================== -->
+    <!-- CHECADOR -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="checador">
+        <h2><i class="bi bi-fingerprint"></i>El Checador (empleado)</h2>
+    </div>
+
+    <p>El checador es la pantalla donde los empleados registran su asistencia. Se abre desde el navegador del celular en la dirección <code>/checador</code> de tu instalación. No requiere instalar ninguna aplicación.</p>
+
+    <h3>Requisitos del dispositivo</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Requisito</th><th>Para qué</th><th>Si falta</th></tr></thead>
+        <tbody>
+            <tr><td><i class="bi bi-geo-alt me-1"></i> GPS / ubicación activa</td><td>Validar que estás dentro de la geocerca de tu lugar de trabajo</td><td>El botón de checar queda deshabilitado</td></tr>
+            <tr><td><i class="bi bi-camera me-1"></i> Cámara con permiso</td><td>Tomar la foto de evidencia (obligatoria)</td><td>El botón de checar queda deshabilitado</td></tr>
+            <tr><td><i class="bi bi-wifi me-1"></i> Conexión a internet</td><td>Enviar la checada al servidor en el momento</td><td>No es posible registrar la checada</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Ingresar con NIP</h3>
+    <p>El empleado se identifica con su <strong>NIP personal de 4 caracteres</strong> (letras A-Z y números 1-9), que le entrega su administrador al darlo de alta. El NIP identifica automáticamente al empleado y a su empresa.</p>
+
+    <ol class="step-list">
+        <li>Abre <code>/checador</code> en el navegador del celular</li>
+        <li>Escribe tu <strong>NIP de 4 caracteres</strong> (se convierte a mayúsculas automáticamente)</li>
+        <li>Presiona <strong>"Ingresar"</strong></li>
+        <li>Verás tu nombre, tu empresa, la cámara activa y tu actividad reciente</li>
+    </ol>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-exclamation-triangle me-1"></i> Bloqueo por intentos de NIP</strong>
+        Si se ingresan varios NIP incorrectos seguidos (el límite lo define tu empresa, normalmente 3), el dispositivo se bloquea durante <strong>15 minutos</strong>.
+    </div>
+
+    <h3 id="checador-checar">Registrar una checada</h3>
+    <p>A diferencia de otros sistemas, en GeoCheck <strong>no eliges entre "entrada" o "salida"</strong>: hay un único botón <strong>"Registrar checada"</strong> y el sistema determina automáticamente qué transición corresponde según tu horario (inicio de jornada, inicio o fin de descanso, fin de jornada, etc.).</p>
+
+    <ol class="step-list">
+        <li>Permite el acceso a la <strong>cámara</strong> y a la <strong>ubicación</strong> cuando el navegador lo pida</li>
+        <li>Espera a que el indicador de GPS muestre tus coordenadas y el aviso diga <em>"Listo: cámara y GPS activos"</em></li>
+        <li>Centra tu rostro en el recuadro de la cámara</li>
+        <li>Presiona <strong>"REGISTRAR CHECADA"</strong></li>
+        <li>El sistema toma la foto, valida tu posición y te confirma el resultado: tipo de checada, ubicación, hora y si hubo retardo</li>
+        <li>La checada aparece de inmediato en tu <strong>actividad reciente</strong></li>
+    </ol>
+
+    <h3>Flujo de un día típico</h3>
+    <div class="row g-2 my-4">
+        <div class="col"><div class="flow-step"><i class="bi bi-sunrise"></i><p>Inicio jornada</p></div></div>
+        <div class="col-auto flow-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col"><div class="flow-step"><i class="bi bi-cup-hot"></i><p>Inicio descanso</p></div></div>
+        <div class="col-auto flow-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col"><div class="flow-step"><i class="bi bi-arrow-return-left"></i><p>Fin descanso</p></div></div>
+        <div class="col-auto flow-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col"><div class="flow-step"><i class="bi bi-sunset"></i><p>Fin jornada</p></div></div>
+    </div>
+
+    <h3 id="checador-reglas">Reglas y validaciones del servidor</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Validación</th><th>Qué revisa</th><th>Si no se cumple</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Geocerca</strong></td><td>Que la distancia a tu ubicación de trabajo sea menor al radio + tolerancia configurados</td><td>La checada se rechaza indicando a cuántos metros estás y cuál es el límite</td></tr>
+            <tr><td><strong>Precisión del GPS</strong></td><td>Que la señal GPS sea suficientemente precisa (límite configurable por empresa)</td><td>Se pide reintentar en un lugar con mejor señal</td></tr>
+            <tr><td><strong>Foto de evidencia</strong></td><td>Que se haya capturado una foto real desde la cámara</td><td>No se permite checar</td></tr>
+            <tr><td><strong>Duplicados</strong></td><td>Que no exista otra checada tuya en los últimos segundos</td><td>Se ignora el intento repetido (sin checadas dobles)</td></tr>
+            <tr><td><strong>Horario</strong></td><td>Qué transición de tu horario corresponde a la hora actual</td><td>Si ya completaste todas las checadas del día, te lo indica</td></tr>
+            <tr><td><strong>Retardo</strong></td><td>Si llegas después de la hora del bloque + su tolerancia en minutos</td><td>La checada se registra pero queda marcada con retardo y los minutos de diferencia</td></tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box danger">
+        <strong><i class="bi bi-exclamation-octagon me-1"></i> Checadas omitidas = incidencias automáticas</strong>
+        Si un empleado se salta una checada obligatoria (por ejemplo, no marcó el inicio de descanso y ya está marcando el fin), el sistema registra automáticamente una <strong>checada virtual pendiente de autorización</strong> por cada transición omitida y crea una <strong>incidencia "No checada"</strong> para que Recursos Humanos la revise y resuelva.
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-clock-history me-1"></i> Actividad reciente</strong>
+        Debajo del botón de checada, el empleado ve sus últimas 5 checadas con su tipo, ubicación, fecha y estado (aceptada, por autorizar o rechazada, con etiquetas de retardo cuando aplica).
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- DASHBOARD -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="dashboard">
+        <h2><i class="bi bi-speedometer2"></i>Dashboard</h2>
+    </div>
+
+    <p>El Dashboard es la pantalla principal del panel. Proporciona una visión general del estado de la asistencia de tu empresa en un solo vistazo.</p>
+
+    <h3>Indicadores Clave</h3>
+    <p>Cuatro tarjetas con métricas en tiempo real:</p>
+    <table class="table ref-table">
+        <thead><tr><th>Indicador</th><th>Qué muestra</th></tr></thead>
+        <tbody>
+            <tr><td><i class="bi bi-person-check me-1"></i> Checadas hoy</td><td>Registros reales del día (no incluye virtuales)</td></tr>
+            <tr><td><i class="bi bi-alarm me-1"></i> Retardos hoy</td><td>Checadas del día marcadas con retardo</td></tr>
+            <tr><td><i class="bi bi-exclamation-triangle me-1"></i> Incidencias pendientes</td><td>Incidencias que Recursos Humanos aún no resuelve</td></tr>
+            <tr><td><i class="bi bi-shield-check me-1"></i> Dentro de geocerca</td><td>Porcentaje de checadas dentro del perímetro en los últimos 30 días</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Gráficos</h3>
+    <h4>1. Checadas por mes</h4>
+    <p>Gráfico de <strong>área</strong> con la cantidad de checadas de cada uno de los últimos 12 meses. Permite identificar tendencias.</p>
+
+    <h4>2. Distribución por estado</h4>
+    <p>Gráfico de <strong>anillo</strong> con las checadas de hoy según su estado: <code>Aceptadas</code>, <code>Pendientes</code> y <code>Rechazadas</code>.</p>
+
+    <h4>3. Checadas por ubicación</h4>
+    <p>Gráfico de <strong>barras</strong> con las 6 ubicaciones con más checadas en los últimos 30 días.</p>
+
+    <h3>Checadas recientes y actividad</h3>
+    <ul>
+        <li><strong>Checadas recientes:</strong> tabla con los últimos 10 registros (empleado, ubicación, fecha, tipo y estado con badges) y botón para abrir el detalle de cada checada</li>
+        <li><strong>Actividad del sistema:</strong> los últimos eventos de auditoría (quién hizo qué y cuándo)</li>
+    </ul>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-arrow-clockwise me-1"></i> Refrescar</strong>
+        Usa el botón <strong>Refrescar</strong> en la esquina superior para recargar todos los datos del dashboard sin recargar la página.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- USUARIOS -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="usuarios">
+        <h2><i class="bi bi-people"></i>Usuarios</h2>
+    </div>
+
+    <p>El módulo de Usuarios administra a todas las personas de la empresa: administradores, supervisores y empleados. Aquí se asignan los NIP, las ubicaciones donde cada quien puede checar y sus horarios.</p>
+
+    <h3>Listado de Usuarios</h3>
+    <p>La pantalla principal muestra una tabla interactiva con todos los usuarios registrados. Funcionalidades:</p>
+    <ul>
+        <li><strong>Búsqueda:</strong> Campo de búsqueda global para filtrar en tiempo real</li>
+        <li><strong>Filtros por pestañas:</strong> Filtra por estado u otros criterios configurados</li>
+        <li><strong>Exportar:</strong> Botones para exportar a Excel, PDF e Imprimir</li>
+        <li><strong>Visibilidad de columnas:</strong> Muestra/oculta columnas según necesites</li>
+        <li><strong>Ordenamiento:</strong> Haz clic en cualquier encabezado de columna para ordenar</li>
+    </ul>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-plus-circle me-1"></i> Nuevo Registro</strong>
+        El botón <strong>"Nuevo"</strong> se encuentra en el <strong>pie de página</strong> (footer) fijo del sistema. Esto aplica para todos los módulos con listado.
+    </div>
+
+    <h3>Formulario de Usuario</h3>
+    <table class="table ref-table">
+        <thead>
+            <tr><th>Campo</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><i class="bi bi-upc me-1"></i> No. empleado</td><td>Texto</td><td><span class="badge-optional">Opcional</span></td><td>Código interno; si se captura, debe ser único en la empresa</td></tr>
+            <tr><td><i class="bi bi-person me-1"></i> Nombre</td><td>Texto</td><td><span class="badge-required">Requerido</span></td><td>Nombre completo del usuario</td></tr>
+            <tr><td><i class="bi bi-envelope me-1"></i> Correo</td><td>Correo electrónico</td><td><span class="badge-required">Requerido</span></td><td>Debe ser único; se guarda en minúsculas</td></tr>
+            <tr><td><i class="bi bi-calendar me-1"></i> Ingreso</td><td>Fecha</td><td><span class="badge-required">Requerido</span></td><td>Fecha de ingreso a la empresa</td></tr>
+            <tr><td><i class="bi bi-123 me-1"></i> NIP</td><td>Texto (4 caracteres)</td><td><span class="badge-auto">Automático</span></td><td>Se autogenera al crear el usuario; puede regenerarse con un clic</td></tr>
+            <tr><td><i class="bi bi-lock me-1"></i> Contraseña</td><td>Contraseña</td><td><span class="badge-required">Requerido al crear</span></td><td>Mínimo 8 caracteres con al menos una letra y un número</td></tr>
+            <tr><td><i class="bi bi-person-badge me-1"></i> Rol</td><td>Lista desplegable</td><td><span class="badge-required">Requerido</span></td><td>Administrador / Supervisor / Empleado</td></tr>
+            <tr><td><i class="bi bi-toggle-on me-1"></i> Activo</td><td>Lista desplegable</td><td><span class="badge-required">Requerido</span></td><td>Un usuario inactivo no puede entrar al panel ni checar</td></tr>
+            <tr><td><i class="bi bi-image me-1"></i> Foto de perfil</td><td>Imagen JPG</td><td><span class="badge-optional">Opcional</span></td><td>Imagen JPG de hasta 5 MB</td></tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-123 me-1"></i> El NIP se muestra una sola vez</strong>
+        Al crear un usuario, el sistema genera su NIP y lo muestra en pantalla <strong>una sola vez</strong>. Anótalo y entrégalo al empleado de forma segura. Si se pierde, usa el botón de <strong>regenerar NIP</strong> en la ficha del usuario para crear uno nuevo.
+    </div>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-shield-lock me-1"></i> Solo un administrador gestiona administradores</strong>
+        Un supervisor no puede crear usuarios con rol Administrador ni editar a un administrador existente. Esto evita escaladas de permisos.
+    </div>
+
+    <h3>Modos de operación</h3>
+
+    <h4>Modo Alta (Nuevo)</h4>
+    <ol class="step-list">
+        <li>Haz clic en <strong>"Nuevo"</strong> desde el listado (footer)</li>
+        <li>Completa los campos del formulario</li>
+        <li>Presiona <strong>"Guardar"</strong></li>
+        <li>Confirma la operación en la ventana emergente</li>
+        <li>El sistema valida, guarda y te muestra el <strong>NIP autogenerado</strong></li>
+    </ol>
+
+    <h4>Modo Edición</h4>
+    <p>Al abrir un usuario existente puedes modificar sus datos y presionar <strong>"Guardar"</strong>; el sistema pide confirmación antes de aplicar los cambios. Dejar la contraseña vacía conserva la actual.</p>
+
+    <h3>Paneles Relacionados (Tabs)</h3>
+    <p>En modo edición, la ficha del usuario incluye tres pestañas que se guardan junto con el formulario:</p>
+    <ul>
+        <li><strong>Checadas:</strong> historial completo del empleado con fecha, tipo, ubicación, distancia, minutos de diferencia, retardo y resultado. Permite agregar <strong>checadas manuales</strong> (quedan distinguibles de las validadas por el motor)</li>
+        <li><strong>Ubicaciones:</strong> en qué ubicaciones puede checar el empleado (con vigencias opcionales)</li>
+        <li><strong>Horarios:</strong> qué horario tiene asignado y desde cuándo</li>
+    </ul>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-exclamation-triangle me-1"></i> Sin ubicación u horario no hay checada útil</strong>
+        Un empleado <strong>sin ubicación asignada no puede checar</strong> (el sistema se lo indicará). Un empleado sin horario sí puede checar, pero sus checadas no tendrán tipo de transición ni detección de retardos.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- HORARIOS -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="horarios">
+        <h2><i class="bi bi-clock"></i>Horarios</h2>
+    </div>
+
+    <p>Los horarios definen la jornada de los empleados mediante <strong>segmentos</strong>: bloques de tiempo de tipo <strong>laboral</strong> o <strong>descanso</strong>, asignados a días de la semana. Las <strong>transiciones</strong> entre segmentos son los momentos en que el empleado debe checar.</p>
+
+    <h3>Estructura de un Horario</h3>
+    <div class="row g-3 my-3">
+        <div class="col-md-4">
+            <div class="relation-box">
+                <i class="bi bi-clock"></i>
+                <h6>Horario</h6>
+                <small class="text-muted">Nombre y estado</small>
+            </div>
+        </div>
+        <div class="col-md-1 relation-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-collection"></i>
+                <h6>Segmentos</h6>
+                <small class="text-muted">Bloques laboral / descanso</small>
+            </div>
+        </div>
+        <div class="col-md-1 relation-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-calendar-week"></i>
+                <h6>Días</h6>
+                <small class="text-muted">Lunes a domingo</small>
+            </div>
+        </div>
+    </div>
+
+    <h3>Propiedades de cada segmento</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Propiedad</th><th>Descripción</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Tipo</strong></td><td><code>laboral</code> (tiempo de trabajo) o <code>descanso</code> (comida, break)</td></tr>
+            <tr><td><strong>Hora inicio / fin</strong></td><td>Rango del bloque dentro del día</td></tr>
+            <tr><td><strong>Días de la semana</strong></td><td>En qué días aplica el segmento (Lun a Dom)</td></tr>
+            <tr><td><strong>Tolerancia (min)</strong></td><td>Minutos de gracia antes de marcar retardo al entrar al bloque</td></tr>
+            <tr><td><strong>Requiere checada</strong></td><td>Si las transiciones de este bloque son obligatorias. Si el empleado las omite, se genera incidencia automática</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tipos de checada que generan las transiciones</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Transición</th><th>Tipo de checada</th></tr></thead>
+        <tbody>
+            <tr><td>Antes del primer segmento → primer segmento</td><td><strong>Inicio jornada</strong></td></tr>
+            <tr><td>Bloque laboral → bloque descanso</td><td><strong>Inicio descanso</strong></td></tr>
+            <tr><td>Bloque descanso → bloque laboral</td><td><strong>Fin descanso</strong></td></tr>
+            <tr><td>Bloque laboral → bloque laboral</td><td><strong>Cambio de segmento laboral</strong></td></tr>
+            <tr><td>Último segmento → fin del día</td><td><strong>Fin jornada</strong></td></tr>
+        </tbody>
+    </table>
+
+    <p>El editor visual de segmentos valida automáticamente que no existan <strong>traslapes</strong> ni huecos inválidos entre bloques del mismo día.</p>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-moon-stars me-1"></i> Turnos nocturnos</strong>
+        Por ahora los segmentos deben iniciar y terminar el <strong>mismo día</strong>: los turnos que cruzan medianoche (ej. 22:00 a 06:00) no se pueden modelar todavía. Está previsto para una versión futura.
+    </div>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-toggle-off me-1"></i> Protección al desactivar</strong>
+        No es posible desactivar un horario que tenga <strong>asignaciones vigentes</strong> con empleados; primero reasígnalos a otro horario.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- UBICACIONES -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="ubicaciones">
+        <h2><i class="bi bi-map"></i>Ubicaciones</h2>
+    </div>
+
+    <p>Las ubicaciones son los lugares físicos donde los empleados pueden checar: oficinas, sucursales, obras, almacenes. Cada una tiene una <strong>geocerca</strong>: un círculo en el mapa dentro del cual la checada es válida.</p>
+
+    <h3>Formulario de Ubicación</h3>
+    <table class="table ref-table">
+        <thead>
+            <tr><th>Campo</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><i class="bi bi-shop me-1"></i> Nombre</td><td>Texto</td><td><span class="badge-required">Requerido</span></td><td>Nombre descriptivo del lugar</td></tr>
+            <tr><td><i class="bi bi-geo-alt me-1"></i> Dirección</td><td>Texto</td><td><span class="badge-auto">Automático</span></td><td>Se completa automáticamente al colocar el pin en el mapa</td></tr>
+            <tr><td><i class="bi bi-crosshair me-1"></i> Latitud / Longitud</td><td>Coordenadas</td><td><span class="badge-required">Requerido</span></td><td>Posición exacta; se fijan al hacer clic en el mapa</td></tr>
+            <tr><td><i class="bi bi-circle me-1"></i> Radio (m)</td><td>Número</td><td><span class="badge-required">Requerido</span></td><td>Radio de la geocerca en metros</td></tr>
+            <tr><td><i class="bi bi-plus-circle-dotted me-1"></i> Tolerancia (m)</td><td>Número</td><td><span class="badge-required">Requerido</span></td><td>Metros adicionales de margen sobre el radio</td></tr>
+            <tr><td><i class="bi bi-toggle-on me-1"></i> Estado</td><td>Lista desplegable</td><td><span class="badge-required">Requerido</span></td><td>Activa / Inactiva</td></tr>
+        </tbody>
+    </table>
+
+    <h3>El mapa con geocerca</h3>
+    <p>El formulario incluye un <strong>mapa interactivo</strong> donde:</p>
+    <ul>
+        <li>Haces clic (o buscas una dirección) para colocar el <strong>pin</strong> de la ubicación</li>
+        <li>Se dibujan <strong>dos círculos</strong>: el radio (zona válida) y el radio + tolerancia (margen extra)</li>
+        <li>La dirección se obtiene automáticamente de las coordenadas</li>
+    </ul>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-rulers me-1"></i> ¿Qué radio elegir?</strong>
+        Considera el tamaño real del lugar más la imprecisión natural del GPS de los celulares. Para una oficina pequeña, un radio de 20 a 50 m con 5 a 15 m de tolerancia suele funcionar bien. Si los empleados reportan rechazos estando dentro, aumenta la tolerancia.
+    </div>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-toggle-off me-1"></i> Protección al desactivar</strong>
+        No es posible desactivar una ubicación si es <strong>la única donde pueden checar</strong> uno o más empleados; primero asígnales otra ubicación.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- CHECADAS -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="checadas">
+        <h2><i class="bi bi-calendar-check"></i>Checadas</h2>
+    </div>
+
+    <p>El módulo de Checadas es el registro central de asistencia: cada marca realizada desde el checador (o agregada manualmente) aparece aquí.</p>
+
+    <h3>Listado de Checadas</h3>
+    <p>Tabla interactiva con fecha y hora del servidor, empleado, tipo de transición, segmentos, ubicación, resultado y retardo. Incluye búsqueda, filtros, exportación y orden por columnas como todos los listados.</p>
+
+    <h3>Detalle de una Checada</h3>
+    <p>Al abrir una checada (botón <i class="bi bi-eye"></i>) se muestra su ficha completa de solo lectura:</p>
+    <ul>
+        <li><strong>Usuario y ubicación:</strong> quién checó y dónde</li>
+        <li><strong>Detalles:</strong> tipo de transición, segmentos de salida/entrada, hora del servidor y del dispositivo</li>
+        <li><strong>GPS y estado:</strong> coordenadas, dentro/fuera de geocerca, retardo y resultado</li>
+        <li><strong>Evidencia:</strong> la foto tomada al checar, con vista previa y botón de descarga</li>
+        <li><strong>Mapa:</strong> la posición exacta de la checada contra la geocerca de la ubicación</li>
+    </ul>
+
+    <h3>Estados de una checada</h3>
+    <div class="d-flex gap-2 my-3 flex-wrap">
+        <span class="badge bg-success px-3 py-2">Aceptado</span>
+        <span class="badge bg-warning text-dark px-3 py-2">Pendiente autorización</span>
+        <span class="badge bg-danger px-3 py-2">Rechazado</span>
+    </div>
+    <ul>
+        <li><strong>Aceptado:</strong> checada validada por el motor (o autorizada por RH)</li>
+        <li><strong>Pendiente autorización:</strong> checada <strong>virtual</strong> generada por una omisión; espera resolución de RH en Incidencias</li>
+        <li><strong>Rechazado:</strong> la incidencia asociada fue rechazada por RH</li>
+    </ul>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-pencil me-1"></i> Checadas manuales</strong>
+        Desde la ficha de un usuario (pestaña Checadas) se pueden agregar checadas manuales, por ejemplo para regularizar un día. Quedan registradas con distancia 0 y sin minutos de diferencia, de modo que siempre se distinguen de las validadas por GPS.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- INCIDENCIAS -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="incidencias">
+        <h2><i class="bi bi-shield-exclamation"></i>Incidencias</h2>
+    </div>
+
+    <p>Las incidencias son el mecanismo de Recursos Humanos para revisar y resolver las <strong>checadas omitidas</strong> detectadas por el sistema (y otros eventos como retardos justificables).</p>
+
+    <h3>Cómo nace una incidencia</h3>
+    <ol class="step-list">
+        <li>Un empleado omite una checada obligatoria (ej. no marcó el inicio de su descanso)</li>
+        <li>Al registrar su siguiente checada, el sistema detecta la omisión</li>
+        <li>Se crea automáticamente una <strong>checada virtual</strong> con estado "Pendiente autorización"</li>
+        <li>Se genera la <strong>incidencia tipo "No checada"</strong> vinculada a esa checada virtual</li>
+        <li>La incidencia aparece en el listado para que RH la resuelva</li>
+    </ol>
+
+    <h3>Resolver una incidencia</h3>
+    <p>Cada incidencia pendiente ofrece tres acciones:</p>
+
+    <table class="table ref-table">
+        <thead><tr><th>Acción</th><th>Botón</th><th>Qué hace</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Completar</strong></td>
+                <td><span class="badge bg-info"><i class="bi bi-pencil-square"></i></span></td>
+                <td>Abre un formulario para capturar los datos reales de la checada virtual: ubicación (solo las autorizadas del empleado), fechas, coordenadas, dentro/fuera de geocerca y si fue retardo</td>
+            </tr>
+            <tr>
+                <td><strong>Autorizar</strong></td>
+                <td><span class="badge bg-success"><i class="bi bi-check-circle"></i></span></td>
+                <td>Marca la incidencia como autorizada y la checada pasa a <strong>Aceptado</strong>. Registra quién autorizó y cuándo</td>
+            </tr>
+            <tr>
+                <td><strong>Rechazar</strong></td>
+                <td><span class="badge bg-danger"><i class="bi bi-x-circle"></i></span></td>
+                <td>Pide un <strong>motivo obligatorio</strong>, marca la checada como <strong>Rechazado</strong> y guarda el motivo en las observaciones</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-lightning me-1"></i> Completar y autorizar en un paso</strong>
+        Al usar <strong>Autorizar</strong> sobre una checada virtual, el sistema abre primero el formulario de completado y al guardarlo autoriza la incidencia en la misma operación.
+    </div>
+
+    <div class="tip-box danger">
+        <strong><i class="bi bi-shield-lock me-1"></i> Sin dobles resoluciones</strong>
+        Una incidencia ya autorizada no puede modificarse ni rechazarse después. Si dos personas intentan resolver la misma incidencia al mismo tiempo, solo la primera operación procede y la otra recibe un aviso.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REPORTES -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="reportes">
+        <h2><i class="bi bi-file-earmark-bar-graph"></i>Reportes</h2>
+    </div>
+
+    <p>El módulo de Reportes genera un <strong>resumen de asistencia por empleado</strong> en el rango de fechas que elijas.</p>
+
+    <h3>Generar un reporte</h3>
+    <ol class="step-list">
+        <li>Selecciona el <strong>empleado</strong> (o deja "Todos los empleados")</li>
+        <li>Define las fechas <strong>Desde</strong> y <strong>Hasta</strong> (por defecto: el mes en curso)</li>
+        <li>Presiona <strong>"Generar"</strong></li>
+        <li>Usa los botones de la tabla para <strong>exportar</strong> a Excel, CSV o imprimir</li>
+    </ol>
+
+    <h3>Columnas del reporte</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Columna</th><th>Qué muestra</th></tr></thead>
+        <tbody>
+            <tr><td>Días con checadas</td><td>Días distintos del rango en que el empleado registró al menos una checada</td></tr>
+            <tr><td>Checadas</td><td>Total de checadas reales (las rechazadas no cuentan)</td></tr>
+            <tr><td>Retardos</td><td>Checadas marcadas con retardo</td></tr>
+            <tr><td>Min. retardo</td><td>Suma de los minutos de retardo acumulados</td></tr>
+            <tr><td>Checadas omitidas</td><td>Checadas virtuales generadas por omisiones</td></tr>
+            <tr><td>Incidencias pendientes / autorizadas</td><td>Incidencias del rango según su resolución</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================================================================== -->
+    <!-- CONFIGURACIÓN -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="configuracion">
+        <h2><i class="bi bi-gear"></i>Configuración</h2>
+    </div>
+
+    <p>El módulo de Configuración (exclusivo para <strong>administradores</strong>) ajusta el comportamiento del checador y administra el calendario de días festivos de la empresa.</p>
+
+    <h3>Parámetros de checadas</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Parámetro</th><th>Qué controla</th><th>Valor típico</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Margen GPS (m)</strong></td><td>Margen por defecto al crear nuevas geocercas</td><td>50 m</td></tr>
+            <tr><td><strong>Precisión máx. GPS (m)</strong></td><td>Si la señal GPS del celular es peor que este valor, la checada se rechaza y se pide reintentar</td><td>50 m</td></tr>
+            <tr><td><strong>Intentos máx. de NIP</strong></td><td>Intentos fallidos de NIP permitidos antes de bloquear el checador 15 minutos</td><td>3</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Días festivos</h3>
+    <p>Catálogo de los días no laborables de la empresa:</p>
+    <ol class="step-list">
+        <li>Haz clic en <strong>"Agregar"</strong> en la tarjeta de días festivos</li>
+        <li>Captura la <strong>fecha</strong>, el <strong>nombre</strong> (ej. "Día de la Independencia") y si es de <strong>descanso obligatorio</strong></li>
+        <li>Guarda. El festivo aparece en la tabla y puede eliminarse con confirmación</li>
+    </ol>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-calendar-x me-1"></i> Una fecha, un festivo</strong>
+        No puede registrarse el mismo día festivo dos veces: el sistema valida que la fecha sea única por empresa.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- AUDITORÍA -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="auditoria">
+        <h2><i class="bi bi-clipboard-data"></i>Auditoría</h2>
+    </div>
+
+    <p>El módulo de Auditoría es un registro de <strong>solo lectura</strong> que almacena automáticamente cada acción relevante realizada en el sistema.</p>
+
+    <h3>Qué se registra</h3>
+    <ul>
+        <li><strong>Qué:</strong> Descripción de la acción (ej. "Checada registrada desde el checador", "Edición de usuario")</li>
+        <li><strong>Módulo:</strong> En qué módulo ocurrió (usuarios, checador, incidencias, etc.)</li>
+        <li><strong>Resultado:</strong> <code>ok</code>, <code>error</code> o <code>aviso</code></li>
+        <li><strong>Detalles:</strong> Información adicional legible</li>
+        <li><strong>Fecha:</strong> Fecha y hora exacta del evento</li>
+        <li><strong>Usuario:</strong> Quién realizó la acción</li>
+    </ul>
+
+    <div class="tip-box danger">
+        <strong><i class="bi bi-shield-exclamation me-1"></i> Solo lectura</strong>
+        Los registros de auditoría <strong>no pueden editarse ni eliminarse</strong> desde el panel. Esto garantiza la integridad y trazabilidad de todas las acciones del sistema.
+    </div>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-lock me-1"></i> Protección de datos sensibles</strong>
+        El sistema filtra automáticamente datos sensibles (contraseñas, NIP, claves e identificadores internos) antes de almacenarlos en la auditoría.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- RELACIONES -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="relaciones">
+        <h2><i class="bi bi-share"></i>Relaciones entre Módulos</h2>
+    </div>
+
+    <p>Entender cómo se relacionan los módulos es clave para aprovechar GeoCheck al máximo:</p>
+
+    <div class="card border-0 shadow-sm my-4">
+        <div class="card-body p-4" style="font-family: monospace; font-size: 0.95rem; line-height: 2.2; background: #f8f9fa; border-radius: 12px;">
+            <i class="bi bi-building text-primary"></i> <strong>Empresa</strong> &nbsp;(1)&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-people text-success"></i> <strong>Usuario</strong><br>
+            <i class="bi bi-people text-success"></i> <strong>Usuario</strong> &nbsp;(N)&gt;&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-map text-info"></i> <strong>Ubicación</strong> <small class="text-muted">(dónde puede checar)</small><br>
+            <i class="bi bi-people text-success"></i> <strong>Usuario</strong> &nbsp;(N)&gt;&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-clock text-info"></i> <strong>Horario</strong> <small class="text-muted">(con vigencias)</small><br>
+            <i class="bi bi-clock text-info"></i> <strong>Horario</strong> &nbsp;(1)&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-collection"></i> <strong>Segmento</strong><br>
+            <i class="bi bi-collection"></i> <strong>Segmento</strong> &nbsp;(1)&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-calendar-week"></i> <strong>Día de la semana</strong><br>
+            <i class="bi bi-people text-success"></i> <strong>Usuario</strong> &nbsp;(1)&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-calendar-check text-warning"></i> <strong>Checada</strong><br>
+            <i class="bi bi-calendar-check text-warning"></i> <strong>Checada</strong> &nbsp;(1)&mdash;&mdash;&lt; (N)&nbsp; <i class="bi bi-camera text-secondary"></i> <strong>Evidencia</strong><br>
+            <i class="bi bi-calendar-check text-warning"></i> <strong>Checada virtual</strong> &nbsp;(1)&mdash;&mdash;(1)&nbsp; <i class="bi bi-shield-exclamation text-danger"></i> <strong>Incidencia</strong>
+        </div>
+    </div>
+
+    <h3>Flujo recomendado de configuración inicial</h3>
+    <ol class="step-list">
+        <li><strong>Configuración</strong> — Ajusta precisión del GPS, intentos de NIP y registra los días festivos</li>
+        <li><strong>Ubicaciones</strong> — Crea los lugares de trabajo con su geocerca en el mapa</li>
+        <li><strong>Horarios</strong> — Diseña las jornadas con sus segmentos, tolerancias y días</li>
+        <li><strong>Usuarios</strong> — Da de alta a los empleados, asígnales ubicaciones y horario, y entrégales su NIP</li>
+        <li><strong>Checador</strong> — Comparte la dirección <code>/checador</code> con los empleados para que empiecen a marcar</li>
+        <li><strong>Incidencias</strong> — Resuelve diariamente las checadas omitidas que detecte el sistema</li>
+        <li><strong>Dashboard y Reportes</strong> — Monitorea indicadores y exporta los cortes de asistencia</li>
+    </ol>
+
+    <!-- ================================================================== -->
+    <!-- ATAJOS Y TIPS -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="atajos">
+        <h2><i class="bi bi-lightning"></i>Atajos y Tips</h2>
+    </div>
+
+    <h3>Tips de productividad</h3>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-phone me-1"></i> Checador como "app" en el celular</strong>
+        Pide a los empleados abrir <code>/checador</code> y usar la opción <strong>"Agregar a pantalla de inicio"</strong> de su navegador. Tendrán el checador a un toque, como si fuera una app instalada.
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-123 me-1"></i> Entrega el NIP en persona</strong>
+        El NIP es la llave de asistencia del empleado. Entrégalo de forma directa y privada; si se compromete, regenera uno nuevo desde la ficha del usuario en segundos.
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-rulers me-1"></i> Ajusta la geocerca con datos reales</strong>
+        El detalle de cada checada muestra la <strong>distancia exacta</strong> a la que estaba el empleado. Si ves rechazos frecuentes de gente que sí estaba en sitio, usa ese dato para aumentar el radio o la tolerancia de la ubicación.
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-search me-1"></i> Búsqueda con lista desplegable</strong>
+        Los campos de selección (empleado, ubicación, horario) tienen búsqueda integrada. Simplemente comienza a escribir para filtrar las opciones rápidamente.
+    </div>
+
+    <div class="tip-box tip">
+        <strong><i class="bi bi-download me-1"></i> Exportar datos</strong>
+        En cualquier listado y en el reporte de asistencia, usa los botones de exportación para descargar los datos en <strong>Excel</strong> o <strong>CSV</strong>, o <strong>imprimir</strong> directamente.
+    </div>
+
+    <div class="tip-box warning">
+        <strong><i class="bi bi-gear me-1"></i> Precisión del GPS: ni muy estricta ni muy laxa</strong>
+        Si los empleados reportan que "no les deja checar" en interiores, sube el valor de <strong>precisión máxima del GPS</strong> en Configuración. Si te preocupa la exactitud de la posición, bájalo. Es el parámetro con más impacto en el día a día.
+    </div>
+
+    <div class="tip-box info">
+        <strong><i class="bi bi-moon me-1"></i> Modo oscuro</strong>
+        Si trabajas en ambientes con poca luz o prefieres reducir el brillo, activa el <strong>tema oscuro</strong> desde el icono de luna en la barra superior. Tu preferencia se guardará automáticamente.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- TECNOLOGÍA -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="tecnologia">
+        <h2><i class="bi bi-cpu"></i>Tecnología</h2>
+    </div>
+
+    <p>GeoCheck está construido con tecnología moderna, robusta y orientada al rendimiento:</p>
+
+    <div class="row g-3 my-4">
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-server" style="font-size:2rem;color:var(--primary-color);"></i>
+                <h6>Servidor</h6>
+                <small class="text-muted">Motor de validación rápido donde ocurre toda la lógica</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-database" style="font-size:2rem;color:var(--primary-color);"></i>
+                <h6>Base de Datos</h6>
+                <small class="text-muted">Almacenamiento seguro y optimizado</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-geo-alt" style="font-size:2rem;color:var(--primary-color);"></i>
+                <h6>Geolocalización</h6>
+                <small class="text-muted">Mapas interactivos y cálculo de distancias en servidor</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="relation-box">
+                <i class="bi bi-hdd-network" style="font-size:2rem;color:var(--primary-color);"></i>
+                <h6>Infraestructura</h6>
+                <small class="text-muted">Alojamiento con contenedores optimizados</small>
+            </div>
+        </div>
+    </div>
+
+    <h3>Componentes de la Interfaz</h3>
+    <table class="table ref-table">
+        <thead><tr><th>Componente</th><th>Función</th></tr></thead>
+        <tbody>
+            <tr><td>Diseño adaptable (responsivo)</td><td>La interfaz se ajusta automáticamente a cualquier tamaño de pantalla; el checador está optimizado para celular</td></tr>
+            <tr><td>Mapas interactivos</td><td>Visualización de geocercas y de la posición exacta de cada checada</td></tr>
+            <tr><td>Cámara y GPS del navegador</td><td>Captura de evidencia y posición sin instalar aplicaciones</td></tr>
+            <tr><td>Tablas interactivas</td><td>Listados con búsqueda, ordenamiento, exportación y paginación rápida</td></tr>
+            <tr><td>Gráficos del dashboard</td><td>Visualización de datos con gráficos de área, anillo y barras</td></tr>
+            <tr><td>Listas desplegables con búsqueda</td><td>Campos de selección con filtrado rápido al escribir</td></tr>
+            <tr><td>Alertas y confirmaciones</td><td>Mensajes visuales elegantes para acciones importantes</td></tr>
+            <tr><td>Notificaciones emergentes</td><td>Mensajes temporales de estado (éxito, error, aviso)</td></tr>
+            <tr><td>Contraseñas cifradas</td><td>Almacenadas con algoritmos modernos de cifrado irreversible</td></tr>
+            <tr><td>Evidencias con sello de integridad</td><td>Cada foto se guarda con una huella digital que permite verificar que no fue alterada</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ================================================================== -->
+    <!-- FAQ -->
+    <!-- ================================================================== -->
+    <div class="section-header" id="faq">
+        <h2><i class="bi bi-question-circle"></i>Preguntas Frecuentes</h2>
+    </div>
+
+    <div class="accordion" id="faqAccordion">
+        <!-- FAQ 1 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true">
+                    ¿Por qué el botón "Registrar checada" está deshabilitado?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    El botón solo se habilita cuando la <strong>cámara</strong> y el <strong>GPS</strong> están activos y con permiso. Revisa:<br>
+                    1. Que el navegador tenga permiso de <strong>ubicación</strong> y <strong>cámara</strong> para el sitio<br>
+                    2. Que la ubicación del celular esté <strong>encendida</strong><br>
+                    3. El texto de ayuda debajo del botón indica exactamente qué falta
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    Estoy en mi lugar de trabajo pero dice "Fuera de geocerca", ¿qué hago?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    El mensaje indica a <strong>cuántos metros</strong> estás y cuál es el límite. Suele deberse a la imprecisión del GPS en interiores:<br>
+                    1. Acércate a una ventana o sal brevemente a cielo abierto y reintenta<br>
+                    2. Si pasa con frecuencia, pide a tu administrador <strong>aumentar la tolerancia</strong> de la ubicación o la <strong>precisión máxima del GPS</strong> en Configuración
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    ¿Qué pasa si olvidé marcar una checada (ej. el inicio del descanso)?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    <strong>El sistema lo detecta solo.</strong> Al registrar tu siguiente checada, se crea automáticamente una <strong>checada virtual</strong> por la transición omitida y una <strong>incidencia</strong> para Recursos Humanos, quien podrá completar los datos y <strong>autorizarla o rechazarla</strong>. No necesitas reportarlo manualmente, aunque avisar a tu supervisor agiliza la autorización.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    ¿Puedo cambiar la hora de mi celular para "llegar a tiempo"?
+                </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    <strong>No funciona.</strong> La hora oficial de toda checada es la del <strong>servidor</strong>, no la del dispositivo. La hora del celular solo se guarda como referencia y, si está muy desviada, queda registrada en los registros del sistema.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                    ¿El empleado necesita correo y contraseña para checar?
+                </button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    <strong>No.</strong> El empleado solo necesita su <strong>NIP de 4 caracteres</strong> en el checador. El correo y la contraseña son para el <strong>panel administrativo</strong>, al que solo entran administradores y supervisores.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                    ¿Qué hago si un empleado olvidó su NIP?
+                </button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    Un administrador o supervisor abre la ficha del empleado en <strong>Usuarios</strong> y usa el botón de <strong>regenerar NIP</strong>. El sistema crea uno nuevo al instante (el anterior deja de funcionar) y se lo entregas al empleado.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                    ¿Dónde veo la foto que se tomó en una checada?
+                </button>
+            </h2>
+            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    En el panel, módulo <strong>Checadas</strong>, abre el detalle de la checada con el botón del ojo. La sección <strong>Evidencia</strong> muestra la foto con vista previa y un botón para descargarla. Solo el personal de tu empresa puede verla. Las fotos se guardan 24 meses; las más antiguas se borran solas y la checada se conserva sin foto.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                    ¿Cómo recupero mi contraseña del panel?
+                </button>
+            </h2>
+            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    Contacta a tu <strong>administrador</strong>: él puede asignarte una nueva contraseña desde el módulo de Usuarios. Por seguridad, el sistema no envía contraseñas por correo.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                    ¿Mis datos están seguros?
+                </button>
+            </h2>
+            <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    <strong>Sí.</strong> GeoCheck implementa:<br>
+                    - Aislamiento total de datos por empresa<br>
+                    - Contraseñas cifradas con algoritmos modernos e irreversibles<br>
+                    - Validación de geocerca, horario y evidencia <strong>en el servidor</strong> (no manipulable desde el celular)<br>
+                    - Evidencias fotográficas con sello de integridad<br>
+                    - Bloqueos por intentos fallidos (contraseña y NIP)<br>
+                    - Auditoría completa de cada acción, con filtrado de datos sensibles
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="accordion-item border-0 mb-2 shadow-sm rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
+                    ¿Cuál es el orden recomendado para empezar?
+                </button>
+            </h2>
+            <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    1. <strong>Configuración</strong> — Ajusta GPS, intentos de NIP y días festivos<br>
+                    2. <strong>Ubicaciones</strong> — Crea los lugares de trabajo con su geocerca<br>
+                    3. <strong>Horarios</strong> — Diseña las jornadas con segmentos y tolerancias<br>
+                    4. <strong>Usuarios</strong> — Da de alta empleados, asigna ubicaciones/horarios y entrega los NIP<br>
+                    5. <strong>Checador</strong> — Los empleados empiezan a marcar desde su celular<br>
+                    6. <strong>Incidencias</strong> — Resuelve a diario las omisiones detectadas<br>
+                    7. <strong>Dashboard y Reportes</strong> — Monitorea y exporta la asistencia
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="text-center text-muted py-4">
+        <img src="assets/img/logo_geocheck.png" alt="GeoCheck Logo" style="width:64px; height:64px; object-fit:contain;" class="d-block mx-auto mb-2">
+        <p><strong>GeoCheck</strong> &mdash; Sistema de Control de Asistencia por Geolocalización</p>
+        <small>Desarrollado por <a href="https://alkes.mx/" target="_blank" style="color: var(--accent-color);">ALKES - Software y soluciones TI</a></small>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="manual-footer">
+    <div class="d-flex justify-content-between align-items-center">
+        <span>&copy; 2026 GeoCheck. Todos los derechos reservados.</span>
+        <span>Desarrollado con <i class="bi bi-heart-fill" style="color:var(--accent-color);"></i> por <a href="https://alkes.mx/" target="_blank" style="color: #fff; text-decoration: none; font-weight: bold;">ALKES - Software y soluciones TI</a></span>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- TOC active state -->
+<script>
+(function () {
+    'use strict';
+
+    var sections = document.querySelectorAll('.section-header[id]');
+    var tocLinks = document.querySelectorAll('.toc-sidebar a[href^="#"]');
+
+    function onScroll() {
+        var scrollPos = window.scrollY + 120;
+        var current = '';
+
+        sections.forEach(function (section) {
+            if (section.offsetTop <= scrollPos) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') == '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+</script>
+</body>
+</html>
